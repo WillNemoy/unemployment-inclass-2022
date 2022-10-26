@@ -1,0 +1,6 @@
+# this is the requirements.txt file
+
+python-dotenv
+pandas
+requests
+plotly
