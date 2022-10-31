@@ -1,7 +1,7 @@
 
 #This is the "app/unemployment_.py" file...
 import os
-from pickle import FALSE
+#from pickle import FALSE
 import pandas as pd
 
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
@@ -10,9 +10,25 @@ request_url = f"https://www.alphavantage.co/query?function=UNEMPLOYMENT&apikey={
 
 df = pd.read_csv(request_url)
 
-#print(df.head())
+print("Get Data:")
+print(df.head())
+print()
 
 #Challenge A
+print("Challenge A:")
 print("Latest Unemployment Rate:")
 df_first_row = df.iloc[0]
 print(f"{df_first_row['timestamp']}:", f"{df_first_row['value']}%")
+print()
+
+#Challenge B
+print("Challenge B")
+df_current_year = df[df["timestamp"].str.contains("2022-")]
+print(df_current_year)
+print()
+print("Average Unemployment this Year:", f"{df_current_year['value'].mean()}%")
+print("Number of Months:", len(df_current_year))
+print()
+
+#Challenge C
+
