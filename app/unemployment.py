@@ -1,21 +1,14 @@
 
 #This is the "app/unemployment_.py" file...
 import os
-import json
-from pprint import pprint
-
-import requests
+import pandas as pd
 
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
 
-request_url = f"https://www.alphavantage.co/query?function=UNEMPLOYMENT&apikey={API_KEY}"
+request_url = f"https://www.alphavantage.co/query?function=UNEMPLOYMENT&apikey={API_KEY}&datatype=csv"
 
-response = requests.get(request_url)
+df = pd.read_csv(request_url)
 
-parsed_response = json.loads(response.text)
-print(type(parsed_response))
-pprint(parsed_response)
-
-
-latest = parsed_response["data"][0]
-print(latest)
+print(df.head())
+print(df.columns)
+print(len(df))
