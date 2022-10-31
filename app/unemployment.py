@@ -1,8 +1,8 @@
 
 #This is the "app/unemployment_.py" file...
 import os
-#from pickle import FALSE
 import pandas as pd
+from plotly.express import line
 
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
 
@@ -31,4 +31,6 @@ print("Number of Months:", len(df_current_year))
 print()
 
 #Challenge C
-
+print("Challenge C:")
+fig = line(x=df["timestamp"], y=df["value"], title="United States Unemployment Rate Over Time", labels={"x":"Month", "y":"Unemployment Rate"})
+fig.show()
