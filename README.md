@@ -36,7 +36,7 @@ ALPHAVANTAGE_API_KEY="_________"
 
 ## Usage
 
-Run an example script report:
+Run an example script:
 
 ```sh
 python app/my_script.py
