@@ -4,3 +4,6 @@ python-dotenv
 pandas
 requests
 plotly
+
+#using this to find and run our tests:
+pytest

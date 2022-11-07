@@ -55,3 +55,12 @@ Run stocks report:
 ```sh
 python -m app.stocks
 ```
+
+
+## Testing 
+
+Run Tests:
+
+```sh
+pytest
+```
