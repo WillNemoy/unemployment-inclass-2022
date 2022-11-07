@@ -44,7 +44,7 @@ python -m app.my_script
 Run the unemployment report:
 
 ```sh
-python app/unemployment.py
+python -m app.unemployment
 
 #or pass API key from the command line
 ALPHAVANTAGE_API_KEY="_______" python app/unemployment.py
