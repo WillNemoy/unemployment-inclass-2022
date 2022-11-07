@@ -2,8 +2,7 @@
 
 from app.stocks import format_usd, fetch_stocks_data
 
-from pandas import DataFrame
-
+import pandas as pd
 
 
 def test_usd_formatting():
@@ -22,7 +21,7 @@ def test_usd_formatting():
 
 def test_data_fetching():
     result = fetch_stocks_data("NFLX")
-    assert isinstance(result, DataFrame)
+    assert isinstance(result, pd.DataFrame)
 
     assert "timestamp" in result.columns
     assert "adjusted_close" in result.columns
