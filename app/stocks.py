@@ -1,24 +1,32 @@
 # this is the "app/stocks.py" file...
 
-print("STOCKS REPORT...")
 
-import os
-from dotenv import load_dotenv
 from pandas import read_csv
 
 from app.alpha import API_KEY
 
-#functions defined here
 def format_usd(my_price):
     return f"${my_price:,.2f}"
 
-if __name__ == "__main__":
-    symbol = input("Please input a crypto symbol (default: 'NFLX'): ") or "NFLX"
-    print("SYMBOL:", symbol)
 
+def fetch_stocks_data(symbol):
     request_url = f"https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={symbol}&apikey={API_KEY}&datatype=csv"
 
     df = read_csv(request_url)
+
+    return df
+
+
+
+if __name__ == "__main__":
+
+    print("STOCKS REPORT...")
+
+    symbol = input("Please input a crypto symbol (default: 'NFLX'): ") or "NFLX"
+    print("SYMBOL:", symbol)
+
+    df = fetch_stocks_data(symbol)
+
     print(df.columns)
     print(df.head())
     #breakpoint()
@@ -30,8 +38,6 @@ if __name__ == "__main__":
 
     #print(latest["timestamp"])
     #print(latest["close"])
-
-
     print("LATEST:", format_usd(latest["adjusted_close"]), "as of", latest["timestamp"])
 
     # Challenge B
@@ -41,13 +47,3 @@ if __name__ == "__main__":
 
     print("HIGH:", format_usd(df["high"].max()))
     print("LOW:", format_usd(df["low"].min()))
-
-
-
-
-
-
-
-
-
-
