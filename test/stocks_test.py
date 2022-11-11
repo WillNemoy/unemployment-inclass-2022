@@ -2,7 +2,8 @@
 
 from app.stocks import format_usd, fetch_stocks_data
 
-import pandas as pd
+from pandas import DataFrame
+
 
 
 def test_usd_formatting():
@@ -21,12 +22,15 @@ def test_usd_formatting():
 
 def test_data_fetching():
     result = fetch_stocks_data("NFLX")
-    assert isinstance(result, pd.DataFrame)
+    assert isinstance(result, DataFrame)
 
     assert "timestamp" in result.columns
     assert "adjusted_close" in result.columns
     assert "high" in result.columns
     assert "low" in result.columns
 
-
     assert len(result) >= 100
+
+
+    #result = fetch_stocks_data("OOPS")
+    # todo: test invalid inputs. what should happen?
