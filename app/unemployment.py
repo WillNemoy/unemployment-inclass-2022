@@ -1,37 +1,81 @@
 
-#This is the "app/unemployment_.py" file...
-import os
-import pandas as pd
+import json
+from pprint import pprint
+from statistics import mean
+
+import requests
 from plotly.express import line
-from dotenv import load_dotenv # <--- ADDITION
 
 from app.alpha import API_KEY
 
-request_url = f"https://www.alphavantage.co/query?function=UNEMPLOYMENT&apikey={API_KEY}&datatype=csv"
 
-df = pd.read_csv(request_url)
+def format_pct(my_number):
+    """
+    Formats a percentage number like 3.6555554 as percent, rounded to two decimal places.
 
-print("Get Data:")
-print(df.head())
-print()
+    Param my_number (float) like 3.6555554
 
-#Challenge A
-print("Challenge A:")
-print("Latest Unemployment Rate:")
-df_first_row = df.iloc[0]
-print(f"{df_first_row['timestamp']}:", f"{df_first_row['value']}%")
-print()
+    Returns (str) like '3.66%'
+    """
+    return f"{my_number:.2f}%"
 
-#Challenge B
-print("Challenge B")
-df_current_year = df[df["timestamp"].str.contains("2022-")]
-print(df_current_year)
-print()
-print("Average Unemployment this Year:", f"{df_current_year['value'].mean()}%")
-print("Number of Months:", len(df_current_year))
-print()
 
-#Challenge C
-print("Challenge C:")
-fig = line(x=df["timestamp"], y=df["value"], title="United States Unemployment Rate Over Time", labels={"x":"Month", "y":"Unemployment Rate"})
-fig.show()
+
+def fetch_unemployment_data():
+    """Fetches unemployment data from the AlphaVantage API. Returns a list of dictionaries."""
+    request_url = f"https://www.alphavantage.co/query?function=UNEMPLOYMENT&apikey={API_KEY}"
+
+    response = requests.get(request_url)
+
+    parsed_response = json.loads(response.text)
+    #print(type(parsed_response))
+    #pprint(parsed_response)
+
+    # TODO: consider converting string rates to floats before returning the data
+    # TODO: consider creating and returning a pandas DataFrame, if you like that kind of thing
+    return parsed_response["data"]
+
+
+
+if __name__ == "__main__":
+
+    print("UNEMPLOYMENT REPORT...")
+
+    data = fetch_unemployment_data()
+
+
+    # Challenge A
+    #
+    # What is the most recent unemployment rate? And the corresponding date?
+    # Display the unemployment rate using a percent sign.
+
+    print("-------------------------")
+    print("LATEST UNEMPLOYMENT RATE:")
+    #print(data[0])
+    print(f"{data[0]['value']}%", "as of", data[0]["date"])
+
+
+    # Challenge B
+    #
+    # What is the average unemployment rate for all months during this calendar year?
+    # ... How many months does this cover?
+
+    this_year = [d for d in data if "2022-" in d["date"]]
+
+    rates_this_year = [float(d["value"]) for d in this_year]
+    #print(rates_this_year)
+
+    print("-------------------------")
+    print("AVG UNEMPLOYMENT THIS YEAR:", format_pct(mean(rates_this_year)))
+    print("NO MONTHS:", len(this_year))
+
+
+    # Challenge C
+    #
+    # Plot a line chart of unemployment rates over time.
+
+    dates = [d["date"] for d in data]
+    rates = [float(d["value"]) for d in data]
+
+    fig = line(x=dates, y=rates, title="United States Unemployment Rate over time", labels= {"x": "Month", "y": "Unemployment Rate"})
+    fig.show()
