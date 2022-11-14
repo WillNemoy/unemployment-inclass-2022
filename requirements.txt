@@ -8,3 +8,6 @@ sendgrid==6.6.0
 
 #using this to find and run our tests:
 pytest
+
+#for web app
+flask
