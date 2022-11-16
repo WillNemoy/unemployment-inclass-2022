@@ -12,4 +12,6 @@ pytest
 #for web app
 flask
 
+# the heroku server wants to use this package to run our web app
+
 gunicorn
