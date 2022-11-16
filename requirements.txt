@@ -11,3 +11,5 @@ pytest
 
 #for web app
 flask
+
+gunicorn
