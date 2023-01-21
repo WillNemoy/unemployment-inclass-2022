@@ -32,7 +32,7 @@ def stocks_dashboard():
         latest_close_usd = format_usd(df.iloc[0]["adjusted_close"])
         latest_date = df.iloc[0]["timestamp"]
         data = df.to_dict("records")
-
+        print(data)
         #flash("Fetched Real-time Market Data!", "success")
         return render_template("stocks_dashboard.html",
             symbol=symbol,

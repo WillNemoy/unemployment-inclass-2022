@@ -25,6 +25,7 @@
         //var dates = Object.keys(tsd)
         //var dailyPrices = Object.values(tsd)
         var dates = stockData.map(obj => obj["timestamp"])
+
         var closingPrices = stockData.map(obj => obj["adjusted_close"])
 
         // visualize the data
